@@ -1,0 +1,13 @@
+String Class:
+------------
+It is a inbuilt class in Java (google for java api).
+public final class String extends Object implements Serializable, Comparable<String>, CharSequence
+
+String are immutable. It is in the package java.lang.String. String is a class  not a datatype.
+When ever we do:
+	String name = "Java";  name is a object of String class 
+	String name = new String ("Java"); is same as the first type of declaration.
+
+	Char c = "J"; here c is variable because Char is a data type.
+
+Once we create a string object, we cannot change it because it create a new memory location of that object, we are doing new operation

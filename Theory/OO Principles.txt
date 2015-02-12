@@ -1,0 +1,461 @@
+Java is a platform independent language.
+
+Compiler will convert the high level language into machine level language (underlying platform)
+
+JVM is dependent on the platform while java is platform independent. JVM is different for different platforms.
+It takes the byte code and translates into the underlying platform like windows or Linux etc.
+JVM has interpreter inside of it.
+
+Java compiler will convert the .java files into the bytecode i.e. .class file. This byte code will run in any platform with
+respective JVM.
+
+JRE will contain the JVM and help run the java program
+
+--------------------
+
+In the jdk folder:
+	Inside the bin folder there is javac.exe which will compile the java program into byte code.
+	java.exe is the interpreter which will convert the byte code into machine code.
+
+Function name in small case
+Class name in upper case
+Follow Camel case
+
+-------------------
+
+Object Oriented Programming:
+
+Everything is encapsulated inside the class.
+Class represents a behaviour of something. All the behaviour, properties will be inside a class.
+Object is an instance of a class.
+
+Global Variable: defined inside a class, outside of a function aka INSTANCE Variable
+		They can be accessed by the instance of the class
+Local Variable: defined inside of a function
+
+Members of the class inculdes the instance variables and the methods of the class.
+
+'new' keyword will ask the JVM to allocate a new memory location for the object.
+
+Making new object from the class is like making the photo copy of the Java class. If I make change in the photocopy,
+that will not affect in the photocopy that others have. That means the objects are independent of the other objects.
+
+**
+It is always good to separate the business logic and execution logic.
+
+The default values for the integers type is 0, for decimal category is 0.0, object category (string) is null, boolean is false.
+There is no concept of garbage value in Java. In C there is a concept of garbage value.
+**
+
+You can access the members of the class using the objects and dot operator
+
+
+------------------
+
+Constructor:
+-----------
+
+Way to initialize the instance variables. It's name has to be same as the name of the class.
+No return type, no access modifier.
+They are not invoked explicitly. They will be invoked when the objects are created.
+Any common code can go inside the constructor.
+
+There can be more than one constructor.
+
+Best practise: meaningful name for the variables, follow camel case
+
+
+this Keyword:
+--------------
+
+Addition(int first, int second){
+	this.first = first; 
+	this.second = second;
+}
+
+Here "this" keyword will tell java that the left hand side variable is instance variable i.e. this refers to the instance 
+of the current class.
+
+
+
+
+Polymorphism:
+------------
+Multiple functionlity based on context.
+Java supports polymorphism using OVERLOADING the methods.
+
+You can define multiple methods with the same name in same class, this is polymorphism
+
+public class Operations{
+	int add(int a, int b){
+	return a+b;
+	}
+	int add(int a, int b, int c){
+	return a+b+c;
+	}
+	int add(int a, int b, int c, int d){
+	return a+b+c+d;
+	}
+}
+
+Overloading is concept that supports polymorphism.
+A method is called overloaded, when we have multiple methods with same name provided that
+			1. arguments of the methods should vary or
+			2. argument type, data type, of the method should vary (obviously the return type will change)
+
+It can be broken down as method Overloading and constructor Overloading.
+
+Inheritance:
+-------------
+
+Relation between two class.
+Inheritance is OOP where we can inherit the features (Members) of one class in another class.
+
+Keyword: extends
+
+public class A extends B{
+	// the instance of Class A can access the members (methods and instances) of class B
+	//A is the subclass of B
+	//A is child class or subclass
+	//B is parent class or super class
+}
+
+Any subclass can access the members of the super class. Members means methods and instance variables. REVERSE IS false.
+In UML diagram, the child class will have a arrow pointed towards the parent class ( A---->B )
+
+IMPORTANT: THE CHILD CLASS CANNOT ACCESS THE MEMBERS OF THE SUPER CLASS IF IT IS DECLARED PRIVATE.(ENCAPSULATION)
+	PARENT OR SUPER CLASS WILL NOT BE AWARE OF THE ADDED BEHAVIOUR OF THE CHILD CLASS, AND THUS CANNOT THE MEMBERS OF THE CHILD CLASS.
+
+
+
+-------------------------------------------------------
+
+
+OVERRIDING:
+-----------
+It is a concept where we have a super class and sub class scenario
+Now the object of the subclass needs to customize the methods from 
+the super class. This is called method overriding.
+
+If you define the same method name in the subclass as of the superclass
+then the super class method can be overridden. The internal logic of the
+overridden can be customized to the need.
+
+You can hide or override the method of the super class. 
+
+
+Rectangle rec = new Rectangle();
+
+	is same as:
+
+Rectangle rec;
+rec = new Rectangle();
+
+Scenario:
+----------
+Area is super class.
+Rectangle is a sub class of Area.
+Square is a sub class of Area.
+
+Area area = new Rectangle();
+LHS is a super class and RHS is a sub class.
+The object area can access the all the methods from Area class but cannot 
+access the members of the Rectangle class.
+It is like object of super class is initialized with sub class
+
+It is like a filter. Suppose the Rectangle class overrides
+the Area class's method (calculate). When I do like
+area.calculate(); // here the area will invoke the calculate methods of 
+				 // Rectangle class
+
+
+1. USING THE OBJECT OF THE SUPER CLASS, WE CAN ACCESS THE OVERRIDDEN METHODS OF THE SUBCLASS.
+
+DYNAMIC Polymorphism:
+	Say class Rectangle and Square extends the super class and 
+	overrides the method called calculate().
+	So by creating a object of type super class and pointing towards
+	Rectangle and Square, we will be accesing two different methods using
+	same object.
+
+	Area area = new Rectangle();
+	area.calculate();
+	Area area = new Square();
+	area.calculate();
+
+	Here the area object will behave dynamically.
+	This is called Dynamic polymorphism.
+
+
+
+
+------------------------------------------------
+
+
+Abstract methods: Any such methods that is defined in the super class to allow the subclasses to provide the actual 
+				  implementation for those methods.
+
+				  Any abstract methods will have no body because we have no idea what the subclass would want in that body
+
+Any class which have atleast one abstract method needs to be defined as abstract method.
+Abstract Class: Any class with atleast one abstract method
+	ABSTRACT CLASS CANNOT BE INSTANTIATED.
+
+You can do like, 
+	AbstractClass abs = null; 
+	And we can do like initialize it with the object of subclasses as abs = new Subclass();
+The subclasses must override the abstract methods.
+
+** Java doesn't support multiple Inheritance. It means a subclass cannot inherit from more than one super class **
+
+
+Multi Level inheritance is supported in Java. It means B is a subclass of A and C is a subclass of B.
+C inhereits from B and B inherits from A.
+
+public class MultiLevelInheritance{
+	public static void main(String[] args) {
+		A a = new A(); // can access method a1()
+		B b = new B(); // can access method b1() and a1()
+		C c = new C(); // can access method c1(), b1() and a1()
+	}
+}
+
+class A{
+	A(){
+		System.out.println("Constructor of A");
+	}
+	void a1(){
+		System.out.println("");
+	}
+}
+class B{
+	B(){
+		System.out.println("Constructor of B");
+	}
+	// Now overriding a1()
+	void a1(){
+		System.out.println("Overrding the a1() method");
+	}
+	void b1(){
+		System.out.println("");
+		super.a1(); // We can call the superclass object without the object from the subclass
+					// without the super keyword, it will invoke the overridden a1() class
+	}
+	// Now overriding a1()
+}
+class C{
+	C(){
+		System.out.println("Constructor of C");
+	}
+	void c1(){
+		System.out.println("");
+	}
+}
+
+ The lowest level subclass can access all the members of all the higher level superclass. 
+
+'super' keyword will enable us to:	
+	    call the any members (methods and variables) of the super class which is hidden or overridden by the subclass.
+
+
+When create an object of subclass, then the constructor of the most superclass will be invoked and the lowest level will be 
+initialized at last.
+When I make an object of C, then the constructor of A will be invoked, then constructor of B and finally constructor of C.
+
+
+ One more scenario:
+ ------------------
+ If I have no default constructor of A and only have a overridden constructor of A, say A(int x){}.
+ The subclasses B and C has only default constructor.
+ SO when I initialize B, it will give error.
+ 	because it looking for the similar type of default constructor (since A has a overridden constructor, it will not create
+ 		default constructor)
+
+ 	Solution:
+ 		1. Make a default constructor in A class
+ 		or 
+ 		2. In the constructor of B, use super(10)
+ 			It means, look for the constructor that takes int arguments
+ 			This super(x) should be the first line in the constructor
+
+
+Interface:
+---------
+
+C supports multiple inheritance but Java doesnot support multiple inheritance.
+So we have something called Interface
+
+Interface is a kind of abstract class by default and the difference between Interface and abstract class is
+		1. Interface will have only abstract methods
+		2. Subclass can inherit from only one abstract class but can inherit from more than one Interface.
+
+Any subclass that implements Interface needs to override all the methods inside the Interface. All the methods in Interface is
+abstract by default, no need to declare abstract.
+
+
+Keyword of the Interface is 'implements'  
+
+	interface MyInterface1 {
+		void method1(); // no need to declare abstract
+		void method2();
+	}
+
+	interface MyInterface2 {
+		void method3(); // no need to declare abstract
+		void method4();
+	}
+
+	class MyInterface implements Interface1, Interface2{
+		public void method1(){
+			System.out.println("something 1");
+		} 
+		public void method2(){
+			System.out.println("something 2");
+		}
+		public void method3(){
+			System.out.println("something 3");
+		}
+		public void method4(){
+			System.out.println("something 4");
+		}
+	}
+
+
+
+-------------------------------------------
+
+Packages:
+---------
+Java files in the src folder and class files in bin folder
+Packages will create a folder in the Java's folder structure
+
+Package declaration should be the first line in the code as package pack1;
+import statement should be the second line in the code.
+
+To access the files from another package, we need to use the keyword, import, to access the classes from 
+another package to this package.
+If you are using all the classes in another package, then do like
+		import pack1.pack11.* // all the "classes" (NOT SUBPACKGES) inside the pack11 will be imported
+
+		This will only import the classes inside that package, but not the subpackage inside it.
+
+However, do not use * always, use it only if you are using all the classes in that package.
+It is not good to unnecessarily import all classes, it slows down the program and takes more memory.
+
+Right click > source > organize import (Ctrl + shift + O)
+
+
+
+
+**
+A subclass can access the public methods of the superclass without any object,just call as add(10,20);
+**
+
+
+ENCAPSULATION:
+--------------
+It uses 3 keyword:
+	1. public
+	2. private
+	3. protected
+
+private: It will make it invisible to others.
+
+	private void add(){...}
+private members (methods and variables) cannot be accessed outside of a class where it is defined.
+It can be called normally within the class. Scope is inside the class.
+
+default: this is not a keyword, if nothing is defined, it is gonna be default.
+		It can be accessed anywhere outside the class too but inside the same package.
+
+public: full access, can be accessed anywhere, in any package...anywhere means anywhere
+
+private is FULL RESTRICTION public is NO RESTRICTION
+
+protected: Only child classes will have access to the members
+	When a class extends another super class then the subclass will be able to access the protected members.
+	If I had done public, anyone would be able to access those members.
+
+This is ALL true for members i.e METHODS and INSTANCE VARIABLES 
+
+
+--------------------------------------------
+
+final keyword:
+--------------
+final keyword with the class cannot be INHERITED. (final public class Addition{})
+final keyword with the method, then that method cannot be OVERRIDDEN.
+
+static keyword:
+----------------
+Can be used with method and variable.
+When we say something static, THE MEMORY IS NOT ALLOCATED INSIDET THE OBJECT. It will be stored in SHARED MEMORY OR COMMON MEMORY (HEAP).
+Latest assigned value will be reflected  to everyone.
+If I declare a variable static, then it will have only one memory and who ever calls it it will access the 
+same memory location.
+
+public class Demo{
+	public static void main(String[] args) {
+		Sub ob1= new Sub();
+		Sub ob2= new Sub();
+		Sub.x=100; ob1.y=200;
+		Sub.x=10;  ob2.y=20;
+		ob1.diff();
+		ob2.diff();
+		System.out.println("Kushal");
+		ob1.diff();
+		Sub.print(); // it can be accessed using the class name rather than objects
+		// We can do like
+		ob1.out.method(); // like accessing object inside a object
+		Sub.out.method();
+	}
+}
+class Sub{
+	static int x; // the memory location of the x is not inside the object and will be stored in the heap as shared memory.
+	int y;
+	C1.out = new C1();
+	static C1 out1= new C1();
+	void diff(){
+		System.out.println(x-y);
+	}
+
+// the memory location for the static method is also in the heap, not with the object
+	static void print(){
+		System.out.println("Value of X:"+x);
+		//System.out.println("Value of Y:"+y); This is not allowed, it is not aware of the memory location of variable y
+	}
+}
+class C1{
+	void method(){
+
+	}
+}
+
+ Output:
+---------
+	-190
+	-10
+	Kushal
+	-190
+	Value of X: 10
+
+Don't use object to access the static variable...use Class name to access the static variable'.
+
+A method can also be defined as static. You cannot access a non static variable for a static method.
+
+Static  methods can access static members (variables and methods).
+Static methods cannot access non static members (variables and methods).
+HOWEVER, Non-static methods can access static members (variables and methods).
+
+
+
+
+static block:
+------------
+static block will be invoked before main method. Then the main method is called.
+static
+{
+	System.out.println("I am a static block");
+}
+
+
