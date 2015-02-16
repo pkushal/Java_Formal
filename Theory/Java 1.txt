@@ -11,3 +11,135 @@ When ever we do:
 	Char c = "J"; here c is variable because Char is a data type.
 
 Once we create a string object, we cannot change it because it create a new memory location of that object, we are doing new operation
+
+String is not a datatype, but a Object type.
+If methods are in same class, we don't need object to invoke them, just make
+sure you are not invoking a static methods.
+Static method cannot call non-static methods but can make calls to the other static memnbers
+
+charAt(int index)
+indexOf(char c): position of character c
+s.toUpperCase();
+s.toLowerCase();
+s.substring(int begin, int end);
+s.length();
+s.equals(String t); // to compare two Strings by value: this is case sensitive
+if(s == t) is not valid, it will compare the objects not the values
+s.equalsIgnoreCase(String t);
+
+
+It is not a good idea to count the index to make a substring, so
+we do like,
+
+	String s = "string";
+	int begin = s.indexOf("s");
+	int stop = s.indexOf("g");
+	String sub = s.subString(begin, stop);
+
+
+
+Exception Handling:
+-------------------
+
+Syntax error
+Logic error
+Run time error
+
+try(...)
+catch (<Exception Class> e)
+{
+ // some code
+}
+catch()
+{
+	...
+}
+catch (Exception e)
+{
+	System.out.println("This is a general catch...")
+	System.out.println(e.stacktrace());
+}
+When ever an exception occurs, Java will create an object of Exception class.
+Catch block will catch the exception object and we need to do the corrective
+action. The lines of code after the catch block will be normally executed.
+
+One try can have multiple level of catch but make sure that you are aware of 
+the order, put the super class exception at last.
+
+
+throw and throws:
+-----------------
+When the calling a method, throw will give the exception object back to the caller.
+
+Inside some method:
+catch(InputMismatchException e){
+	throw e;
+}
+
+And the caller will do like:
+
+try{
+	K.add();
+}
+catch(InputMismatchException e){
+ System.out.println("Please try again: ");
+ K.add();
+}
+This thing will go on as long as the user enters the correct input.
+
+To let other know that some method throws exception is using throws keyword in the method and 
+it also tell that it will not handle the exception but  throw the exception back to the caller.
+
+void add() throws InputMismatchException{
+	//some code
+	try{
+		//some code
+	}
+	catch(InputMismatchException e){
+		throw e;
+	}
+	finally{
+		//some code
+	}
+}
+
+throw will throw the exception and throws will tell java that some exception may happen inside me but I am not 
+handling the exception.
+
+We will use throw when we want to have control over the program flow. In some
+normal case, we can just specify throws in the method and nothing else in there. Caller will do all work
+
+finally:
+the code inside the finally block will always be executed. It ensures that the code inside the finally block will be
+executed before the control goes to somewhere from the catch block.
+
+
+Checked and Unchecked exception:
+---------------------------------
+
+Checked Exception: are the direct subclasses of exception class except Runtime exception class
+					It will for the programmer to handle the exception
+
+Unchecked Exception: Runtime exception and it's subclasses are unchecked
+					 Java will not give compilation error even if we do not exception handling
+					 Java will not force the programmer to handle the exception.
+
+
+
+
+
+
+
+Java I/O:
+----------
+
+All modern I/O are stream based.
+Stream is a connection to a source of data or to a destination
+for data.
+An input stream may be associtated with the keyboard or with a file.
+There is input and output stream.
+Java has inbuilt classes to make a connection with input sources like keyboard, mouse etc
+Package	: import java.io.*
+	Open the stream
+	Use the stream (read, write or both)
+	Close the stream
