@@ -143,3 +143,112 @@ Package	: import java.io.*
 	Open the stream
 	Use the stream (read, write or both)
 	Close the stream
+
+Java I/O has:
+	1. InputStream
+		 like xxxInputStream
+	2. OutputStream
+		 like xxxOutputStream
+	3. Reader
+	      like xxxReader
+	4. Writer
+		  like xxxWriter
+
+To do some read operation, we can use the InputStream or 
+the Reader. Same for the write operation.
+
+
+InputStream and Output supports ASCII
+Reader and writer supports UTF-8
+
+ASCII cannot read like chinese, french format
+UTF-8 supports everything.
+Audio, image, video cannot be used with UTF-8, need to use ASCII.
+For texts, generally use the UTF-8.
+The difference is the encoding and character formats.
+
+
+File class:
+-----------
+java.io.file
+It help to perform operations on the file like make 
+read, copy, delete but not create the connection stream
+
+import java.io.file
+File f = new File("C:\\wala\\fileio\\test.txt");
+try{
+	f.createNewFile();
+	System.out.println("File created");
+	boolean cr = f.canRead(); // can read permission
+	boolean c2 = f.canWrite(); // can write permission
+	boolean d = f.isDirectory();// will tell if it is a directory
+	f.length(); // will give the size of the file
+	f.delete(); // will delete the file
+
+}
+catch(IOException e){
+	System.out.println("File already exists");
+	e.printStackTrace();
+}
+finally{
+	f.close();
+}
+// this will create an empty file called test.txt in the at location
+
+See the methods in the File class from the java api
+
+
+
+If we have directory in the file object, then
+File f = new File("C:\\wala\\fileio");
+File files[]=f.listFiles();
+// it will create array of file object for all the file in that directory.
+for(int i=0; i<files.length; i++){
+	System.out.println(files[i].getName());
+}
+
+Read and Write operation on a file:
+-----------------------------------
+
+FileInputStream f = new FileInputStream("C:\\wala\\fileio\\test.txt");// this needs to be in the try catch block
+int value =f.read();
+// this will read a single character from the file
+// this will give the ASCII value of first character
+char c = (char) f.read();
+int k;
+while((k=f.read())!=-1){
+	// read method will return -1 when it reaches  end of the file
+	char c =(char) k;
+	// do not do read here again else it will escapr character...think
+	System.out.println(c);
+}
+f.close();
+
+This class is not efficient. So lets use FileReader or BuffererdReader.
+
+FileReader class:
+------------------
+FileReader f = new FileReader("C:\\wala\\fileio\\test.txt");
+//Other operation is same.
+BuffererdReader br = new BuffererdReader(f);
+// BuffererdReader internally implements  FileReader..to avoid reading char by char
+//It will read char by char and gives line by line... it buffers the characters 
+// Increases the performance
+Both FileReader and BuffererdReader needs to be in the try catch block
+
+String str = br.readLine();
+
+
+String s;
+while(s= br.readLine()!= null){
+// end of the file is null, -1 in the last case
+	System.out.println(s);
+	// don't read here again, it will skip line
+}
+
+
+Explore these classes:
+
+BufferedInputStream
+LineNumberInputStream
+LineNumberReader
