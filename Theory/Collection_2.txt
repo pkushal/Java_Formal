@@ -1,0 +1,11 @@
+Collection:
+-----------
+
+java.util : contains all the class related to collection.
+
+List:
+-----
+We can use ArrayList instead of Array when we have some dynamic kind of need. Array are static in nature and ArrayList is dynamic in nature.
+
+List<String> list = new ArrayList<String>();
+
