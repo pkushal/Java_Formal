@@ -245,10 +245,174 @@ while(s= br.readLine()!= null){
 	System.out.println(s);
 	// don't read here again, it will skip line
 }
-
+// close both bufferreader and the fileReader.
 
 Explore these classes:
 
 BufferedInputStream
 LineNumberInputStream
 LineNumberReader
+
+
+
+Write the content to the file:
+------------------------------
+// Open the stream
+FileOutputStream fout = new FileOutputStream("C:\\wala\\fileio\\test.txt");// this needs to be in the try catch block
+// Perform the read/write operations
+char c = 'K';
+fout.write(c); // It will do the auto conversion, convert to ASCII and write to the file.
+// close the stream
+fout.close();
+
+// FileOutputStream is not a good choice which when we have to write big files, only good for the small texts.
+
+
+FileWriter fw = new FileWriter("C:\\wala\\fileio\\test.txt"); // Supports UTF-8
+char c = "U";
+fw.write(c);
+fw.close();
+
+
+FileWriter fw = new FileWriter("C:\\wala\\fileio\\test.txt", true); // Supports UTF-8
+BufferedWriter bw = new BufferedWriter(fw);
+bw.write("This is my content to the file. ");
+bw.write("\n"); // to have a new line 
+bw.write("This is a second line");
+bw.flush(); // IMPORTANT to flush the data from the bufferedWriter to the file Writer.
+bw.close();
+fw.close();
+
+// Here the first line written will be overridden, so need to add a boolean, to append the content to the existing contents
+
+Read from the keyboard and write to a file:
+-------------------------------------------
+// here we are gonna use bufferedInputStream instead of Scanner object
+public class ReadWrite{
+	public static void main(String[] args) {
+		try{
+			System.out.println("Please enter a character: ");
+			BufferedInputStream bis = new BufferedInputStream(System.in); // System.in represent the standard input device i.e, KEYBOARD
+			char c = (char) fis.read();
+			
+			FileOutputStream fout = new FileOutputStream("C:\\wala\\fileio\\test.txt");
+			fout.write(c);
+			System.out.println("Success");
+			// put these clode methods in the finally block
+			fout.close();
+			bis.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+}
+
+// For large input strings we need to make use of BufferedReader
+public class ReadWrite{
+	public static void main(String[] args) {
+		try{
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr); 
+			// BufferedReader takes a reader object
+			//System.in is InputStream Object so we need to make use of InputStreamReader
+			// InputStreamReader converts InputStream (System.in) to the Reader
+
+
+			System.out.println("Please enter a line:");
+					
+			FileWriter fout = new FileWriter("C:\\wala\\fileio\\test.txt");
+			BufferedWriter br = new BufferedWriter(fout);
+			String str = br.readLine();
+
+			br.write(str);
+			br.flush();
+
+			System.out.println("Success");
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		finally{
+			fout.close();
+			br.close();
+			isr.close();
+			br.close();
+		}
+	}
+}
+
+This method is used when there was no scanner class available. You Scanner to take the input from the keyboard.
+
+
+
+PrintStream:
+------------
+
+Use to perform write operation, difference is it has the abilty to write various format of data like int, long, char, Object
+The previous outputStream only recognized char or String.
+
+public class Kushal{
+	public static void main(String[] args) {
+		int a = 10;
+		int b = 20;
+		try{
+			PrintStream ps = new PrintStream("C:\\wala\\fileio\\test.txt");
+			ps.print("Below are two numbers: ");
+			ps.print(a);
+			ps.print(b);
+			ps.println();
+			ps.print("Sum is :");
+			ps.print(a+b);
+			// NO NEED TO FLUSH INCASE TO STREAMS
+			// No need for the fileWriter and bufferedWriter crap
+			//Print stream will recognize the data type of the content
+			// But the if you use the fileWriter and bufferWriter crap it will give better performance
+
+		}
+	}
+}
+
+public class Kushal{
+	public static void main(String[] args) {
+		int a = 10;
+		int b = 20;
+		try{
+			PrintWriter ps = new PrintWriter("C:\\wala\\fileio\\test.txt"); // supports UTF-8
+			ps.print("Below are two numbers: ");
+			ps.print(a);
+			ps.print(b);
+			ps.println();
+			ps.print("Sum is :");
+			ps.print(a+b);
+			ps.flush(); // DON'T FORGET TO FLUSH INCASE OF WRITERS
+			// THIS PRINTWRITER WILL ALSO RECOGNIZE THE DATA TYPE OF THE CONTENT 
+			// No need for the fileWriter and bufferedWriter crap
+			//Print stream will recognize the data type of the content
+			// But the if you use the fileWriter and bufferWriter crap it will give better performance
+
+		}
+	}
+}
+
+
+IF WE DO LIKE:
+PrintStream ps = new PrintStream(System.out);
+// everything  else same.
+
+It will print the output in the console.
+System.out is an output of OutputStream which represents the standard output device, which is console.
+
+System.out:
+
+System is an inbuilt class in Java
+out is the inbuilt object which represents output device, console (monitor)
+println is the method... println is not a static method...think think..since we are invoking on out object.
+
+There is System.in, System.out, System.err
