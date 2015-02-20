@@ -9,3 +9,268 @@ We can use ArrayList instead of Array when we have some dynamic kind of need. Ar
 
 List<String> list = new ArrayList<String>();
 
+If you do as follows without specifying the type its gonna hold, it can hold any object
+
+ArrayList ob = new ArrayList();
+ob.add(10);
+ob.add("Kushal");
+
+While retreving the values, you need to be careful using type check 
+
+for(int i=0; i< ob.size(); i++){
+	Object obj = ob.get(i); // because every class in Java is a subclass of Object superclass
+	if(obj.instanceOf Book){
+		Book b = (Book)obj;
+	}else{
+		System.out.println(obj);
+	}
+}
+
+This in a good practice to do this. So it is better to use generics that will define the type of object that the class will contain.
+
+ArrayList<Book> ob = new ArrayList<Book>();
+// Now we can only add book object here, it will make sure that the object has only type of object
+// and you will not need to do the instanceOf thing.
+
+If I need to find something from the ArrayList, it will give slow performance since we need to look from start to find something repeatedly.
+
+Memory:
+-------
+Primitive datatypes in stack.
+Objects in Heap.
+
+
+
+
+HashMap:
+--------
+This will have better performance when we need to do search operations.
+
+Book b1= new Book(1, "Java");
+Book b2= new Book(2, ".Net");
+Book b3= new Book(3, "Oracle");
+
+HashMap map = new HashMap();
+HashMap<String, Book> map = new HashMap <String, Book>();
+//It has key value pair
+map.put("java", b1);
+map.put(".Net", b2);
+map.put("oracle", b3);
+// We are adding book against the key, not index....in ArrayList we had stored objects against the index
+If you want to have a key called Java for say 4 books, then make a ArrayList of java related books and put that ArrayList in the 
+HashMap with key as Java or something.
+
+
+
+
+To access the objects,
+
+Book b= map.get("oracle"); // No need to loop like in ArrayList
+			To find that book in ArrayList we would have to loop like:
+
+						for(int i=0; i<alist.size(); i++){
+							Book book = (Book) alist.get(i);
+							if(book.bookName.equals("oracle")){
+								book.print();
+							}
+						}
+Key has to be unique, else it will override
+
+Some useful methods that can be used in the HashMap:
+	public boolean containsKey(Object key);
+	public boolean containsValue(Object value);
+	remove(Object key);
+	clear();
+	kpublic Set<K> keySet(); //Returns a Set view of the keys contained in this map
+	public Set<Map.Entry<K,V>> entrySet(); //Returns a Set view of the mappings contained in this map.
+
+
+
+
+
+
+
+To loop the HashMap:
+--------------------
+
+HASHMAP WIL NOT GUARANTEE THE ORDER OF THE ELEMENTS, ARRAYLIST WILL ENSURE THE ORDER 
+To loop the HashMap, we can use a iterator interface to loop through the HashMap keys.
+
+Set keys = map.keySet();
+Iterator itr = keys.iterator();
+
+while (itr.hasNext()){
+	String key = (String) itr.next();
+	Book b =(Book) map.get(key);
+	b.print();
+}
+
+
+Method 1:
+=========
+//Iterating over entries using For-Each loop.
+//Should be used if you need both map keys and values in the loop.
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+}
+
+
+Mehthod 2:
+==========
+//Iterating over keys or values using For-Each loop.
+//If you need only keys or values from the map, you can iterate over keySet or values instead of entrySet.
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+//iterating over keys only
+for (Integer key : map.keySet()) {
+System.out.println("Key = " + key);
+}
+
+//iterating over values only
+for (Integer value : map.values()) {
+System.out.println("Value = " + value);
+}
+//This method gives slight performance advantage over entrySet iteration (about 10% faster) and is more clean.
+
+
+Method 3:
+=========
+//Iterating using Iterator.
+Using Generics:
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+Iterator<Map.Entry<Integer, Integer>> entries = map.entrySet().iterator();
+while (entries.hasNext()) {
+    Map.Entry<Integer, Integer> entry = entries.next();
+    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+}
+
+Without Generics:
+
+Map map = new HashMap();
+Iterator entries = map.entrySet().iterator();
+while (entries.hasNext()) {
+    Map.Entry entry = (Map.Entry) entries.next();
+    Integer key = (Integer)entry.getKey();
+    Integer value = (Integer)entry.getValue();
+    System.out.println("Key = " + key + ", Value = " + value);
+}
+
+Set keys = map.keySet();
+Iterator itr = keys.iterator();
+
+while (itr.hasNext()){
+	String key = (String) itr.next();
+	Book b =(Book) map.get(key);
+	b.print();
+}
+
+
+Method 4: 
+==========
+//Iterating over keys and SEARCHING FOR VALUE (this is different than method 2) (inefficient).
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for (Integer key : map.keySet()) {
+    Integer value = map.get(key);
+    System.out.println("Key = " + key + ", Value = " + value);
+}
+
+for (String key : map.keySet()) {
+    // ...
+}
+
+for (Object value : map.values()) {
+    // ...
+}
+One caveat: if you want to remove items mid-iteration, you'll' need to do so via an Iterator 
+
+Using Iterator:
+--------------- 
+Set keys = map.keySet();
+Iterator itr = keys.iterator();
+
+while (itr.hasNext()){
+	String key = (String) itr.next();
+	Book b =(Book) map.get(key);
+	b.print();
+}
+
+
+
+
+
+
+HashSet:
+--------
+It is similar to ArrayList but will not allow duplicate entries.
+HashSet doesnot use index, it uses hashcode to keep track of the entries, better performance
+HashSet <Book> hashset = new HashSet<Book>();
+hashset.add(b1);
+hashset.add(b2);
+hashset.add(b3);
+hashset.add(b1); // hashset will not take duplicate entry
+
+Iterator itr = hashset.iterator();
+while(itr.hasNext()){
+	Book b = (Book) itr.next();
+	System.out.println(b); // given that b has toString() overridden in the Book class.
+}
+
+
+
+
+
+
+TreeSet:
+--------
+TreeSet <Integer> hashset = new TreeSet<Integer>();
+treeset.add(31);
+treeset.add(12);
+treeset.add(63);
+treeset.add(12);
+// it has internally implement toString() and Iterator so in this case we don't need to do the Iterator and toString()
+// I guess ArrayList also implemented toString() and Iterator
+System.out.println(treeset);
+
+
+We can access the first and last element by treeset.first(); and treeset.last();
+It will accept duplicate values, but will replace the old one...i mean it won't ' give error.
+It will store values in sorted order and we can retrieve them in sorted form.
+
+
+
+TreeMap:
+-------
+Same as HashMap, but TreeMap stores and return values in sorted order of the key.
+To tell which one is bigger or smaller, you will need to implement the comparator interface in that class of key ...easy peasy
+
+
+Wrapper Classes:
+----------------
+It helps to define the primitive datatypes as object.
+Java provides class for each primitive data type. Primitive datatypes are:
+	1. int  --- Integer
+	2. float ---- Float
+	3. char ----- Chararacter
+	4. double --- Double
+	5. boolean --- Boolean
+
+These Classes wraps the primitive type value in an object.
+int x = 100; // here x is not an object. x is primitive datatype
+Integer y = 100; // here y is a object
+
+Integer x = 100;
+// We do not need to do like Integer x = (Integer) 100; It is done by java called autoCasting
+Integer y = new Integer(200);
+Integer ans = x + y;
+System.out.println(ans); // 300
+
+Wrapper classes can have methods like parse
+String s = x.toString();
+
+String s = "100";
+int sint = Integer.parseInt(s);
+// Wrapper classes has methods to convert Object from one type to another
